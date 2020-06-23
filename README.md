@@ -2,7 +2,7 @@
 
 ## Overview
 
-This repository contains the specifications for [`finp2p`](https://finp2p.atlassian.net), a
+This repository contains the specifications for [`finp2p`](https://finp2p.atlassian.net/wiki/spaces/FINP2P), a
 framework and suite of protocols for building peer-to-peer financial networks and applications.
 
 The main goal of this repository is to provide accurate reference documentation
@@ -45,7 +45,7 @@ issue](https://github.com/finp2p/specifications/issues/new) if there's work you'
 discuss.
 
 For discussions about finp2p that aren't specific to a particular spec, please visit our
-[wiki](https://finp2p.atlassian.net).
+[wiki](https://finp2p.atlassian.net/wiki/spaces/FINP2P).
 
 
 [spec_application_api]: ./application-api/README.md
