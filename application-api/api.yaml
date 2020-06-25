@@ -1,0 +1,688 @@
+openapi: 3.0.1
+info:
+  title: FinP2P Application API
+  description: This is the API specificatinos for application development over the FinP2P network.
+  termsOfService: 'http://swagger.io/terms/'
+  contact:
+    email: admin@finp2p.io
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+  version: 0.0.1
+tags:
+  - name: profiles
+    description: Access to User Profile or Asset Profile
+  - name: claims
+    description: Access to Claims
+  - name: docs
+    description: Documents storage
+  - name: tokens
+    description: Token management
+paths:
+  /profiles/owner:
+    post:
+      tags:
+        - profiles
+      summary: Create owner profile
+      description: 'Creates a new global identity for an asset owner, the Global Identity cryptography is based on the secp256k1 curve'
+      operationId: createOwnerProfile
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - publicKey
+                - signature
+              type: object
+              properties:
+                publicKey:
+                  type: string
+                  description: 'owner secp256k1 public key in compressed form: 33bytes.'
+                signature:
+                  type: string
+                  description: |
+                    Signature = sign(provider private secp256k1 key, hashMsg)
+
+                    hashMsg is the hash (sha3-256) generated from the request params.
+
+                    | order | value | type | comment |
+                    |--|--|--|--|
+                    | 1 | "createOwnerProfile" | string | name of the method |
+                    | 2 | publicKey | []byte | |
+
+        required: true
+      responses:
+        '200':
+          description: successful operation
+        '422':
+          description: Invalid Input
+          content: {}
+        '500':
+          description: System error
+          content: {}
+  /profiles/asset:
+    post:
+      tags:
+        - profiles
+      summary: Create asset profile
+      description: Creates a new profile for an asset identity
+      operationId: createAssetProfile
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - name
+                - type
+                - issuerId
+                - regulationApps
+              type: object
+              properties:
+                config:
+                  type: string
+                  description: The asset configuration, in serilized JSON representation
+                regulationApps:
+                  type: array
+                  description: A list of regulation apps to execute to validate a transaction
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: regulation apps id
+                name:
+                  type: string
+                  description: The name of the asset
+                type:
+                  type: string
+                  description: The type of the asset
+                issuerId:
+                  type: string
+                  description: The issuer of the asset
+        required: true
+      responses:
+        '200':
+          description: successful operation
+        '422':
+          description: Invalid Input
+          content: {}
+        '500':
+          description: System error
+          content: {}
+  '/profiles/{id}/asset':
+    put:
+      tags:
+        - profiles
+      summary: Update asset profile
+      description: Update a profile for an asset identity
+      operationId: updateAssetProfile
+      parameters:
+        - name: id
+          in: path
+          description: ID of the asset profile
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - name
+                - type
+                - issuerId
+                - regulationApps
+              type: object
+              properties:
+                config:
+                  type: object
+                  description: The asset configuration, in serilized JSON representation
+                regulationApps:
+                  type: array
+                  description: A list of regulation apps to execute to validate a transaction
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: regulation apps id
+                name:
+                  type: string
+                  description: The name of the asset
+                type:
+                  type: string
+                  description: The type of the asset
+                issuerId:
+                  type: string
+                  description: The issuer of the asset
+        required: true
+      responses:
+        '200':
+          description: successful operation
+        '422':
+          description: Invalid Input
+          content: {}
+        '500':
+          description: System error
+          content: {}
+  /profiles/provider:
+    post:
+      tags:
+        - profiles
+      summary: Create provider profile
+      description: Creates a new provider profile for an node
+      operationId: createProviderProfile
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - name
+                - publicKey
+                - signature
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the provider
+                publicKey:
+                  type: string
+                  description: 'provider secp256k1 public key in compressed form: 33bytes.'
+                signature:
+                  type: string
+                  description: |
+                    Signature = sign(provider private secp256k1 key, hashMsg)
+
+                    hashMsg is the hash (sha3-256) generated from the request params.
+
+                    | order | value | type | comment |
+                    |--|--|--|--|
+                    | 1 | "createProviderProfile" | string | name of the method |
+                    | 2 | name      | string | |
+                    | 3 | publicKey | []byte | |
+
+        required: true
+      responses:
+        '200':
+          description: successful operation
+        '422':
+          description: Invalid Input
+          content: {}
+        '500':
+          description: System error
+          content: {}
+  '/claims/{id}':
+    put:
+      tags:
+        - claims
+      summary: Update claim
+      description: Updates a new Claim for a specific profile identity
+      operationId: updateClaim
+      parameters:
+        - name: id
+          in: path
+          description: ID of a claim to update
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - issuanceDate
+                - expirationDate
+                - data
+                - signature
+              properties:
+                issuanceDate:
+                  type: number
+                  format: utc
+                  description: The issuance date of the claim
+                expirationDate:
+                  type: number
+                  format: utc
+                  description: The expiration date of the claim
+                data:
+                  type: string
+                  description: Serilized data objects that contain one or more properties that are each related to the subject of the claim
+                signature:
+                  type: string
+                  description: |
+                    Signature = sign(provider private secp256k1 key, hashMsg)
+
+                    hashMsg is the hash (sha3-256) generated from the request params.
+
+                    | order | value | type | comment |
+                    |--|--|--|--|
+                    | 1 | "UpdateClaim" | string | name of the method |
+                    | 2 | data | object | serilized json |
+                    | 3 | expirationDate | string | utc |
+                    | 4 | id | string | |
+                    | 5 | issuanceDate | string | utc |
+        required: true
+      responses:
+        '200':
+          description: successful operation
+        '422':
+          description: Invalid Input
+          content: {}
+        '500':
+          description: System error
+          content: {}
+  /claims:
+    post:
+      tags:
+        - claims
+      summary: Create claim
+      description: Creates a new Claim for a specific profile identity
+      operationId: createClaim
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - issuerId
+                - issuanceDate
+                - expirationDate
+                - subjectId
+                - data
+                - signature
+              properties:
+                type:
+                  type: string
+                  description: The type of the claim
+                issuerId:
+                  type: string
+                  description: The ID of the provider that created the claim
+                issuanceDate:
+                  type: number
+                  format: utc
+                  description: The issuance date of the claim
+                expirationDate:
+                  type: number
+                  format: utc
+                  description: The expiration date of the claim
+                data:
+                  type: string
+                  description: Serilized data objects that contain one or more properties that are each related to the subject of the claim
+                signature:
+                  type: string
+                  description: |
+                    Signature = sign(provider private secp256k1 key, hashMsg)
+
+                    hashMsg is the hash (sha3-256) generated from the request params.
+
+                    | order | value | type | comment |
+                    |--|--|--|--|
+                    | 1 | "CreateClaim" | string | name of the method |
+                    | 2 | data | object | serilized json |
+                    | 3 | expirationDate | string | utc |
+                    | 4 | issuanceDate | string | utc |
+                    | 5 | issuerId | string | |
+                    | 6 | subjectId | string | |
+                    | 7 | type | string | |
+      responses:
+        '200':
+          description: successful operation
+        '422':
+          description: Invalid Input
+          content: {}
+        '500':
+          description: System error
+          content: {}
+  '/docs/{claimnId}/{id}':
+    get:
+      tags:
+        - docs
+      summary: Get document
+      description: 'Get document content, associated with a claim ID'
+      operationId: getClaimDoc
+      parameters:
+        - name: id
+          in: path
+          description: Document ID
+          required: true
+          schema:
+            type: string
+        - name: claimnId
+          in: path
+          description: ID of a claim to return
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            '*':
+              schema:
+                type: string
+                format: binary
+                description: the document in binary format
+        '422':
+          description: Invalid Input
+          content: {}
+        '500':
+          description: System error
+          content: {}
+    put:
+      tags:
+        - docs
+      summary: Update document
+      description: Update an existing document on a Claim
+      operationId: updateClaimDoc
+      parameters:
+        - name: id
+          in: path
+          description: Document ID
+          required: true
+          schema:
+            type: string
+        - name: claimnId
+          in: path
+          description: ID of a claim
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - signature
+              properties:
+                signature:
+                  type: string
+                  description: |
+                    Signature = sign(provider private secp256k1 key, hashMsg)
+
+                    hashMsg is the hash (sha3-256) generated from the request params.
+
+                    | order | value | type | comment |
+                    |--|--|--|--|
+                    | 1 | "UpdateDocument" | string | name of the method |
+                    | 2 | claimId | string | |
+                    | 3 | file | []byte | |
+                    | 4 | id | string | |
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: the document in binary format
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: the ID of the document
+        '422':
+          description: Invalid Input
+          content: {}
+        '500':
+          description: System error
+          content: {}
+  '/docs/{claimnId}':
+    get:
+      tags:
+        - docs
+      summary: Get claim documents
+      description: Get all documents associated with a claim ID
+      operationId: getClaimDocs
+      parameters:
+        - name: claimnId
+          in: path
+          description: ID of a claim to return
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  required:
+                    - id
+                    - name
+                    - mimetype
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    name:
+                      type: string
+                    mimetype:
+                      type: string
+        '422':
+          description: Invalid Input
+          content: {}
+        '500':
+          description: System error
+          content: {}
+    post:
+      tags:
+        - docs
+      summary: Put a new document on a claim
+      description: Put a new document associated with a claim ID
+      operationId: putClaimDoc
+      parameters:
+        - name: claimnId
+          in: path
+          description: ID of a claim to return
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - signature
+              properties:
+                signature:
+                  type: string
+                  description: |
+                    Signature = sign(provider private secp256k1 key, hashMsg)
+
+                    hashMsg is the hash (sha3-256) generated from the request params.
+
+                    | order | value | type | comment |
+                    |--|--|--|--|
+                    | 1 | "CreateDocument" | string | name of the method |
+                    | 2 | claimId | string | |
+                    | 3 | file | []byte | |
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: the document in binary format
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: the ID of the document
+        '422':
+          description: Invalid Input
+          content: {}
+        '500':
+          description: System error
+          content: {}
+  '/tokens/{assetId}':
+    post:
+      tags:
+        - tokens
+      summary: Issue Asset token
+      description: Issue an asset backed token to a user
+      operationId: issueToken
+      parameters:
+        - name: assetId
+          in: path
+          description: the asset profile id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - recipientPublicKey
+                - quantity
+              type: object
+              properties:
+                recipientPublicKey:
+                  type: string
+                  description: Recipient owner secp256k1 public key 33 bytes compressed
+                quantity:
+                  type: number
+                  description: How many units of token type to issue
+        required: true
+      responses:
+        '200':
+          description: successful operation
+        '422':
+          description: Invalid Input
+          content: {}
+        '500':
+          description: System error
+          content: {}
+  '/tokens/{assetId}/transfer':
+    put:
+      tags:
+        - tokens
+      summary: Asset Token transfer
+      description: Transfer existing asset token to a new owner. Transfer of ownership is done by eliminating existing tokens owned by the sender and creating new tokens with the new owner.
+      operationId: transferToken
+      parameters:
+        - name: assetId
+          in: path
+          description: the asset profile id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - sourcePublicKey
+                - recipientPublicKey
+                - quantity
+                - nonce
+                - signature
+              type: object
+              properties:
+                sourcePublicKey:
+                  type: string
+                  description: 'Existing owner secp256k1 public key 33 bytes compressed'
+                recipientPublicKey:
+                  type: string
+                  description: 'New owner secp256k1 public key 33 bytes compressed'
+                quantity:
+                  type: number
+                  description: 'How many units of token type to transfer'
+                nonce:
+                  type: string
+                  description: '24 randomly generated bytes by the client'
+                signature:
+                  type: string
+                  description: |
+                    Signature = sign(sender private secp256k1 key, message)
+                    | order | value | type | comment |
+                    |--|--|--|--|
+                    | 1 | nonce | string | crypto.randomBytes(24) |
+                    | 2 | "transfer"      | string | name of the method |
+                    | 3 | recipientPublicKey | []byte | |
+                    | 4 | assetId            | string | |
+                    | 5 | quantity           | string | hex representation of the quantity |
+
+        required: true
+      responses:
+        '200':
+          description: successful operation
+        '422':
+          description: Invalid Input
+          content: {}
+        '500':
+          description: System error
+          content: {}
+  '/tokens/{assetId}/redeem':
+    put:
+      tags:
+        - tokens
+      summary: Asset Token redeem
+      description: Redeem existing asset token for new owner. Redeem of ownership is done by eliminating existing tokens owned by the owner.
+      operationId: redeemToken
+      parameters:
+        - name: assetId
+          in: path
+          description: the asset profile id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - sourcePublicKey
+                - quantity
+                - nonce
+                - signature
+              type: object
+              properties:
+                sourcePublicKey:
+                  type: string
+                  description: 'Existing owner secp256k1 public key 33 bytes compressed'
+                quantity:
+                  type: number
+                  description: 'How many units of token type to redeem'
+                nonce:
+                  type: string
+                  description: '24 randomly generated bytes by the client'
+                signature:
+                  type: string
+                  description: |
+                    Signature = sign(sender private secp256k1 key, message)
+                    | order | value | type | comment |
+                    |--|--|--|--|
+                    | 1 | nonce | string | crypto.randomBytes(24) |
+                    | 2 | "redeem"      | string | name of the method |
+                    | 4 | assetId            | string | |
+                    | 5 | quantity           | string | hex representation of the quantity |
+
+        required: true
+      responses:
+        '200':
+          description: successful operation
+        '422':
+          description: Invalid Input
+          content: {}
+        '500':
+          description: System error
+          content: {}
