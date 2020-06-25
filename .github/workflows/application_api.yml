@@ -7,11 +7,13 @@ on:
       - "**"
     paths:
       - "application_api/**"
+      - ".github/workflows/application_api.yml"
   push:
     branches:
       - "master"
     paths:
       - "application_api/**"
+      - ".github/workflows/application_api.yml"
 
 jobs:
   validate:
