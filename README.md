@@ -30,10 +30,10 @@ expected lifecycle and document formatting.
 - [Spec Lifecycle][spec_lifecycle] - The process for introducing, revising and
   adopting specs.
 
-### Application API
+### Apps API
 
 These specs define an api to build digital securities applications and services for financial institutions.
-- [application_api][spec_application_api] 
+- [Application API][spec_application_api] 
 
 
 ## Contributions
