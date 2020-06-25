@@ -9,3 +9,10 @@ Requests and responses can be crafted with auto-generated code using
 (easy to debug and understand), and can be used in servers and browsers.
 
 
+[*The transactional API*][application_openapi_spec] conforms to REST. It has predictable, resource-oriented URLs, and it uses HTTP response codes to indicate API errors. JSON is returned by all API responses, including errors.
+
+Use the [*Documentation style visualization*][application_openapi_spec_viewer] for a human readable version.
+
+
+[application_openapi_spec]: ./api.yaml
+[application_openapi_spec_viewer]: https://editor.swagger.io/?url=https%3A%2F%2Fraw.githubusercontent.com%2FFinP2P%2Fspecifications%2Fmaster%2Fapplication-api%2Fapi.yaml
