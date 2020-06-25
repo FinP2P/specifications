@@ -1,0 +1,32 @@
+name: Apps API CI
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - "**"
+    paths:
+      - "application_api/**"
+  push:
+    branches:
+      - "master"
+    paths:
+      - "application_api/**"
+
+jobs:
+  validate:
+    name: Validate
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: [12.x]
+
+      - name: validate openapi spec
+        run: |
+          make deps
+          make release
+
