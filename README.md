@@ -48,4 +48,4 @@ For discussions about finp2p that aren't specific to a particular spec, please v
 [wiki](https://finp2p.atlassian.net/wiki/spaces/FINP2P).
 
 
-[spec_application_api]: ./application-api/README.md
+[spec_application_api]: ./application-api
