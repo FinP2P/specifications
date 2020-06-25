@@ -27,6 +27,7 @@ jobs:
 
       - name: validate openapi spec
         run: |
+          cd application_api
           make deps
           make release
 
