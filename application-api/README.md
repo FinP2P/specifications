@@ -13,6 +13,11 @@ Requests and responses can be crafted with auto-generated code using
 
 Use the [*Documentation style visualization*][application_openapi_spec_viewer] for a human readable version.
 
+[*The query API*][application_graphql_schema] conform to GraphQL, as such it offers significantly more flexibility for the application development. The ability to define precisely the data you want—and only the data you want—is a powerful advantage over the REST. GraphQL lets you replace multiple REST requests with a single call to fetch the data you specify.
+
+Use the [*Schema Explorer*][application_graphql_schema_viewer] to explore the query API schema. 
 
 [application_openapi_spec]: ./api.yaml
 [application_openapi_spec_viewer]: https://editor.swagger.io/?url=https%3A%2F%2Fraw.githubusercontent.com%2FFinP2P%2Fspecifications%2Fmaster%2Fapplication-api%2Fapi.yaml
+[application_graphql_schema]: ./schema.graphql
+[application_graphql_schema_viewer]: https://finp2p.github.io/graphql/index.html

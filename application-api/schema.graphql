@@ -1,0 +1,255 @@
+"Node's information."
+type Node {
+    id: String!
+    type: String!
+    "Assets which the Node act as the Primary Node."
+    assets(filter : [Filter!], aggregates: [Aggregate!]): Assets!
+}
+
+"Profile interface."
+interface Profile {
+    id: String!
+
+    "Collection of Claims associated with the Profile."
+    claims(filter : [Filter!], aggregates: [Aggregate!]): Claims!
+}
+
+"Represents an Asset in the network."
+type Asset implements Profile  {
+    id: String!
+
+    "Collection of Claims associated with the Profile."
+    claims(filter : [Filter!], aggregates: [Aggregate!]): Claims!
+
+    name: String!
+
+    "Type of Asset (Share, Debt etc..)"
+    type: String!
+
+    "Service Providers eligible to provide services (e.g KYA) for the given asset."
+    trustedProviders(filter : [Filter!], aggregates: [Aggregate!]): ServiceProviders!
+
+    "Tokens issued for the given Asset."
+    issuedTokens(filter : [Filter!], aggregates: [Aggregate!]): Tokens!
+
+    "Issuer profile of the Asset."
+    issuer: Issuer!
+
+    "Regulation Apps associated with the Asset."
+    regulationAppsIds: [String!]
+}
+
+"Represents an Issuer in the network."
+type Issuer implements Profile  {
+    id: String!
+
+    "Collection of Claims associated with the Profile."
+    claims(filter : [Filter!], aggregates: [Aggregate!]): Claims!
+
+    name: String!
+
+    "Assets issued by the Issuer."
+    assets(filter : [Filter!], aggregates: [Aggregate!]): Assets!
+
+    "Tokens which belongs to the Issuer."
+    tokens(filter : [Filter!], aggregates: [Aggregate!]): Tokens!
+}
+
+"Represents a ServiceProvider in the network."
+type ServiceProvider implements Profile {
+    id: String!
+
+    "Collection of Claims associated with the Profile."
+    claims(filter : [Filter!], aggregates: [Aggregate!]): Claims!
+
+    name: String!
+
+    "Services offered by the Service Provided (Claims, Regulation Apps, etc..)."
+    services: [String!]
+}
+
+"Represents an Owner in the network."
+type Owner implements Profile  {
+    id: String!
+
+    "Collection of Claims associated with the Profile."
+    claims(filter : [Filter!], aggregates: [Aggregate!]): Claims!
+
+    name: String!
+
+    "Tokens which belongs to the Owner."
+    tokens(filter : [Filter!], aggregates: [Aggregate!]):Tokens!
+}
+
+"Represents a Token in the network."
+type Token {
+    id: String!
+
+    "Association to Owner."
+    owner: Owner!
+
+    name: String!
+
+    "Association to the asset this token belongs to."
+    assetId: String!
+
+    quantity: Int!
+}
+
+"Represents a Claim in the network."
+type Claim {
+    id: String!
+
+    "Profile to whom this Claim is associate with."
+    profile: Profile!
+
+    "Type of Claim (KYA,KYC,AML etc.. )."
+    type: String!
+
+    "Service Provider Id which provided the Claim."
+    providerId : String!
+
+    issuedAt: Int!
+    expiry: Int
+
+    "Semi-Structured Data provided as additional information for the Claim."
+    data: String
+}
+
+"""
+Filter capabilities that can be applied on queries which return multiple results of a given Entity.
+Currently filtering is available only on the fields which belongs to the Root of the entity
+and not on nested entities' fields.
+"""
+input Filter {
+    "The Object's key to which apply the filter rule."
+    key: String!
+
+    "The Value to be used by the Filter Operator."
+    value: String!
+
+    "Operator to apply on the specified key and provided value."
+    operator : Operator!
+}
+
+"Operators available to be used "
+enum Operator {
+    "Equals"
+    EQ
+    "Not Equals"
+    NEQ
+    "Greater Than"
+    GT
+    "Greater Than or Equals"
+    GTE
+    "Less Than"
+    LT
+    "Less Than or Equals"
+    LTE
+}
+
+
+"Results for asset query."
+type Owners {
+    "Collection of Owner Objects, conforms to the Filter input if provided."
+    list: [Owner!]
+    aggregate: [AggregateResult!]
+}
+
+"Results for asset query."
+type Assets {
+    "Collection of Asset Objects, conforms to the Filter input if provided."
+    list: [Asset!]
+
+    "Collection of Aggregate Results, if an Aggregate input was provided."
+    aggregate: [AggregateResult!]
+}
+
+"Results for tokens query."
+type Tokens {
+    "Collection of Token Objects, conforms to the Filter input if provided."
+    list: [Token!]
+
+    "Collection of Aggregate Results, if an Aggregate input was provided."
+    aggregate: [AggregateResult!]
+}
+
+"Results for issuers query."
+type Issuers {
+    "Collection of Issuer Objects, conforms to the Filter input if provided."
+    list: [Issuer!]
+
+    "Collection of Aggregate Results, if an Aggregate input was provided."
+    aggregate: [AggregateResult!]
+}
+
+"Results for serviceProviders query."
+type ServiceProviders {
+    "Collection of ServiceProvider Objects, conforms to the Filter input if provided."
+    list: [ServiceProvider!]
+
+    "Collection of Aggregate Results, if an Aggregate input was provided."
+    aggregate: [AggregateResult!]
+}
+
+"Results for claims query."
+type Claims {
+    "Collection of Claim Objects, conforms to the Filter input if provided."
+    list: [Claim!]
+
+    "Collection of Aggregate Results, if an Aggregate input was provided."
+    aggregate: [AggregateResult!]
+}
+
+"Result of Aggregation function applied on an Object numeric field."
+type AggregateResult {
+    "The Object's field which this results refer to."
+    field: String!
+
+    "The AggregateFunc which this AggregateResult refers to."
+    func: AggregateFunc!
+
+    result: Float!
+}
+
+"Aggregation function to be applied on Object's numeric field."
+enum AggregateFunc {
+    SUM
+    COUNT
+    AVG
+    MAX
+    MIN
+}
+
+"Apply an aggregation function on specified Object's field."
+input Aggregate {
+    "Object's field to which apply the AggregateFunc"
+    field : String
+
+    "AggregateFunc to apply on the provided Field."
+    func :AggregateFunc!
+}
+
+"The query root of Ownera's GraphQL interface"
+type Query {
+    "Look up Assets, Optional provide Filters or Aggregates"
+    assets(filter: [Filter!], aggregate: [Aggregate!]): Assets!
+
+    "Look up Owners, Optional provide Filter or Aggregate"
+    owners(filter: [Filter!], aggregate: [Aggregate!]): Owners!
+
+    "Look up Tokens, Optional provide Filter or Aggregate"
+    tokens(filter: [Filter!], aggregate: [Aggregate!]): Tokens!
+
+    "Look up Issuers, Optional provide Filter or Aggregate"
+    issuers(filter: [Filter!], aggregate: [Aggregate!]): Issuers!
+
+    "Look up Service Providers, Optional provide Filter or Aggregate"
+    serviceProviders(filter: [Filter!], aggregate: [Aggregate!]): ServiceProviders!
+
+    "Look up Claims, Optional provide Filter or Aggregate"
+    claims(filter: [Filter!], aggregate: [Aggregate!]): Claims!
+
+    "Look up a Node"
+    node(id: String!): Node
+}
