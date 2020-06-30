@@ -10,16 +10,16 @@ type Node {
 interface Profile {
     id: String!
 
-    "Collection of Claims associated with the Profile."
-    claims(filter : [Filter!], aggregates: [Aggregate!]): Claims!
+    "Collection of Certificates associated with the Profile."
+    certificates(filter : [Filter!], aggregates: [Aggregate!]): Certificates!
 }
 
 "Represents an Asset in the network."
 type Asset implements Profile  {
     id: String!
 
-    "Collection of Claims associated with the Profile."
-    claims(filter : [Filter!], aggregates: [Aggregate!]): Claims!
+    "Collection of Certificates associated with the Profile."
+    certificates(filter : [Filter!], aggregates: [Aggregate!]): Certificates!
 
     name: String!
 
@@ -35,16 +35,16 @@ type Asset implements Profile  {
     "Issuer profile of the Asset."
     issuer: Issuer!
 
-    "Regulation Apps associated with the Asset."
-    regulationAppsIds: [String!]
+    "Regulation Verifiers associated with the Asset."
+    regulationVerifiersIds: [String!]
 }
 
 "Represents an Issuer in the network."
 type Issuer implements Profile  {
     id: String!
 
-    "Collection of Claims associated with the Profile."
-    claims(filter : [Filter!], aggregates: [Aggregate!]): Claims!
+    "Collection of Certificates associated with the Profile."
+    certificates(filter : [Filter!], aggregates: [Aggregate!]): Certificates!
 
     name: String!
 
@@ -59,25 +59,25 @@ type Issuer implements Profile  {
 type ServiceProvider implements Profile {
     id: String!
 
-    "Collection of Claims associated with the Profile."
-    claims(filter : [Filter!], aggregates: [Aggregate!]): Claims!
+    "Collection of Certificates associated with the Profile."
+    certificates(filter : [Filter!], aggregates: [Aggregate!]): Certificates!
 
     name: String!
 
-    "Services offered by the Service Provided (Claims, Regulation Apps, etc..)."
+    "Services offered by the Service Provided (Certificates, Regulation Verifiers, etc..)."
     services: [String!]
 }
 
-"Represents an Owner in the network."
-type Owner implements Profile  {
+"Represents an User in the network."
+type User implements Profile  {
     id: String!
 
-    "Collection of Claims associated with the Profile."
-    claims(filter : [Filter!], aggregates: [Aggregate!]): Claims!
+    "Collection of Certificates associated with the Profile."
+    certificates(filter : [Filter!], aggregates: [Aggregate!]): Certificates!
 
     name: String!
 
-    "Tokens which belongs to the Owner."
+    "Tokens which belongs to the User."
     tokens(filter : [Filter!], aggregates: [Aggregate!]):Tokens!
 }
 
@@ -85,8 +85,8 @@ type Owner implements Profile  {
 type Token {
     id: String!
 
-    "Association to Owner."
-    owner: Owner!
+    "Association to User."
+    user: User!
 
     name: String!
 
@@ -96,23 +96,23 @@ type Token {
     quantity: Int!
 }
 
-"Represents a Claim in the network."
-type Claim {
+"Represents a Certificate in the network."
+type Certificate {
     id: String!
 
-    "Profile to whom this Claim is associate with."
+    "Profile to whom this Certificate is associate with."
     profile: Profile!
 
-    "Type of Claim (KYA,KYC,AML etc.. )."
+    "Type of Certificate (KYA,KYC,AML etc.. )."
     type: String!
 
-    "Service Provider Id which provided the Claim."
+    "Service Provider Id which provided the Certificate."
     providerId : String!
 
     issuedAt: Int!
     expiry: Int
 
-    "Semi-Structured Data provided as additional information for the Claim."
+    "Semi-Structured Data provided as additional information for the Certificate."
     data: String
 }
 
@@ -149,14 +149,14 @@ enum Operator {
 }
 
 
-"Results for asset query."
-type Owners {
-    "Collection of Owner Objects, conforms to the Filter input if provided."
-    list: [Owner!]
+"Results for users query."
+type Users {
+    "Collection of User Objects, conforms to the Filter input if provided."
+    list: [User!]
     aggregate: [AggregateResult!]
 }
 
-"Results for asset query."
+"Results for assets query."
 type Assets {
     "Collection of Asset Objects, conforms to the Filter input if provided."
     list: [Asset!]
@@ -192,10 +192,10 @@ type ServiceProviders {
     aggregate: [AggregateResult!]
 }
 
-"Results for claims query."
-type Claims {
-    "Collection of Claim Objects, conforms to the Filter input if provided."
-    list: [Claim!]
+"Results for certificates query."
+type Certificates {
+    "Collection of Certificate Objects, conforms to the Filter input if provided."
+    list: [Certificate!]
 
     "Collection of Aggregate Results, if an Aggregate input was provided."
     aggregate: [AggregateResult!]
@@ -230,13 +230,13 @@ input Aggregate {
     func :AggregateFunc!
 }
 
-"The query root of Ownera's GraphQL interface"
+"The query root of Usera's GraphQL interface"
 type Query {
     "Look up Assets, Optional provide Filters or Aggregates"
     assets(filter: [Filter!], aggregate: [Aggregate!]): Assets!
 
-    "Look up Owners, Optional provide Filter or Aggregate"
-    owners(filter: [Filter!], aggregate: [Aggregate!]): Owners!
+    "Look up Users, Optional provide Filter or Aggregate"
+    users(filter: [Filter!], aggregate: [Aggregate!]): Users!
 
     "Look up Tokens, Optional provide Filter or Aggregate"
     tokens(filter: [Filter!], aggregate: [Aggregate!]): Tokens!
@@ -247,9 +247,10 @@ type Query {
     "Look up Service Providers, Optional provide Filter or Aggregate"
     serviceProviders(filter: [Filter!], aggregate: [Aggregate!]): ServiceProviders!
 
-    "Look up Claims, Optional provide Filter or Aggregate"
-    claims(filter: [Filter!], aggregate: [Aggregate!]): Claims!
+    "Look up Certificates, Optional provide Filter or Aggregate"
+    certificates(filter: [Filter!], aggregate: [Aggregate!]): Certificates!
 
     "Look up a Node"
     node(id: String!): Node
 }
+

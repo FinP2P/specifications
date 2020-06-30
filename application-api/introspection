@@ -8,6 +8,53 @@
       "subscriptionType": null,
       "types": [
         {
+          "kind": "ENUM",
+          "name": "Operator",
+          "description": "Operators available to be used ",
+          "fields": [],
+          "inputFields": [],
+          "interfaces": [],
+          "enumValues": [
+            {
+              "name": "EQ",
+              "description": "Equals",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "NEQ",
+              "description": "Not Equals",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "GT",
+              "description": "Greater Than",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "GTE",
+              "description": "Greater Than or Equals",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "LT",
+              "description": "Less Than",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "LTE",
+              "description": "Less Than or Equals",
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "possibleTypes": []
+        },
+        {
           "kind": "OBJECT",
           "name": "ServiceProviders",
           "description": "Results for serviceProviders query.",
@@ -59,29 +106,9 @@
           "possibleTypes": []
         },
         {
-          "kind": "SCALAR",
-          "name": "Int",
-          "description": "The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.",
-          "fields": [],
-          "inputFields": [],
-          "interfaces": [],
-          "enumValues": [],
-          "possibleTypes": []
-        },
-        {
-          "kind": "SCALAR",
-          "name": "ID",
-          "description": "The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as \"4\") or integer (such as 4) input value will be accepted as an ID.",
-          "fields": [],
-          "inputFields": [],
-          "interfaces": [],
-          "enumValues": [],
-          "possibleTypes": []
-        },
-        {
           "kind": "OBJECT",
-          "name": "Asset",
-          "description": "Represents an Asset in the network.",
+          "name": "ServiceProvider",
+          "description": "Represents a ServiceProvider in the network.",
           "fields": [
             {
               "name": "id",
@@ -100,8 +127,8 @@
               "deprecationReason": null
             },
             {
-              "name": "claims",
-              "description": "Collection of Claims associated with the Profile.",
+              "name": "certificates",
+              "description": "Collection of Certificates associated with the Profile.",
               "args": [
                 {
                   "name": "filter",
@@ -145,7 +172,235 @@
                 "name": null,
                 "ofType": {
                   "kind": "OBJECT",
-                  "name": "Claims",
+                  "name": "Certificates",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "name",
+              "description": "",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "services",
+              "description": "Services offered by the Service Provided (Certificates, Regulation Verifiers, etc..).",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": [],
+          "interfaces": [
+            {
+              "kind": "INTERFACE",
+              "name": "Profile",
+              "ofType": null
+            }
+          ],
+          "enumValues": [],
+          "possibleTypes": []
+        },
+        {
+          "kind": "SCALAR",
+          "name": "String",
+          "description": "The `String`scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.",
+          "fields": [],
+          "inputFields": [],
+          "interfaces": [],
+          "enumValues": [],
+          "possibleTypes": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "Node",
+          "description": "Node's information.",
+          "fields": [
+            {
+              "name": "id",
+              "description": "",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "type",
+              "description": "",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "assets",
+              "description": "Assets which the Node act as the Primary Node.",
+              "args": [
+                {
+                  "name": "filter",
+                  "description": "",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "Filter",
+                        "ofType": null
+                      }
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "aggregates",
+                  "description": "",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "Aggregate",
+                        "ofType": null
+                      }
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "Assets",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": [],
+          "interfaces": [],
+          "enumValues": [],
+          "possibleTypes": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "Asset",
+          "description": "Represents an Asset in the network.",
+          "fields": [
+            {
+              "name": "id",
+              "description": "",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "certificates",
+              "description": "Collection of Certificates associated with the Profile.",
+              "args": [
+                {
+                  "name": "filter",
+                  "description": "",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "Filter",
+                        "ofType": null
+                      }
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "aggregates",
+                  "description": "",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "Aggregate",
+                        "ofType": null
+                      }
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "Certificates",
                   "ofType": null
                 }
               },
@@ -307,8 +562,8 @@
               "deprecationReason": null
             },
             {
-              "name": "regulationAppsIds",
-              "description": "Regulation Apps associated with the Asset.",
+              "name": "regulationVerifiersIds",
+              "description": "Regulation Verifiers associated with the Asset.",
               "args": [],
               "type": {
                 "kind": "LIST",
@@ -335,6 +590,224 @@
               "ofType": null
             }
           ],
+          "enumValues": [],
+          "possibleTypes": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "User",
+          "description": "Represents an User in the network.",
+          "fields": [
+            {
+              "name": "id",
+              "description": "",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "certificates",
+              "description": "Collection of Certificates associated with the Profile.",
+              "args": [
+                {
+                  "name": "filter",
+                  "description": "",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "Filter",
+                        "ofType": null
+                      }
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "aggregates",
+                  "description": "",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "Aggregate",
+                        "ofType": null
+                      }
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "Certificates",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "name",
+              "description": "",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "tokens",
+              "description": "Tokens which belongs to the User.",
+              "args": [
+                {
+                  "name": "filter",
+                  "description": "",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "Filter",
+                        "ofType": null
+                      }
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "aggregates",
+                  "description": "",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "Aggregate",
+                        "ofType": null
+                      }
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "Tokens",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": [],
+          "interfaces": [
+            {
+              "kind": "INTERFACE",
+              "name": "Profile",
+              "ofType": null
+            }
+          ],
+          "enumValues": [],
+          "possibleTypes": []
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "Filter",
+          "description": "Filter capabilities that can be applied on queries which return multiple results of a given Entity.\nCurrently filtering is available only on the fields which belongs to the Root of the entity\nand not on nested entities' fields.",
+          "fields": [],
+          "inputFields": [
+            {
+              "name": "key",
+              "description": "The Object's key to which apply the filter rule.",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "value",
+              "description": "The Value to be used by the Filter Operator.",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "operator",
+              "description": "Operator to apply on the specified key and provided value.",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "Operator",
+                  "ofType": null
+                }
+              },
+              "defaultValue": null
+            }
+          ],
+          "interfaces": [],
+          "enumValues": [],
+          "possibleTypes": []
+        },
+        {
+          "kind": "SCALAR",
+          "name": "Float",
+          "description": "The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](http://en.wikipedia.org/wiki/IEEE_floating_point).",
+          "fields": [],
+          "inputFields": [],
+          "interfaces": [],
           "enumValues": [],
           "possibleTypes": []
         },
@@ -390,12 +863,302 @@
           "possibleTypes": []
         },
         {
-          "kind": "SCALAR",
-          "name": "Boolean",
-          "description": "The `Boolean` scalar type represents `true` or `false`.",
+          "kind": "OBJECT",
+          "name": "Users",
+          "description": "Results for users query.",
+          "fields": [
+            {
+              "name": "list",
+              "description": "Collection of User Objects, conforms to the Filter input if provided.",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "User",
+                    "ofType": null
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "aggregate",
+              "description": "",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "AggregateResult",
+                    "ofType": null
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": [],
+          "interfaces": [],
+          "enumValues": [],
+          "possibleTypes": []
+        },
+        {
+          "kind": "ENUM",
+          "name": "AggregateFunc",
+          "description": "Aggregation function to be applied on Object's numeric field.",
           "fields": [],
           "inputFields": [],
           "interfaces": [],
+          "enumValues": [
+            {
+              "name": "SUM",
+              "description": "",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "COUNT",
+              "description": "",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "AVG",
+              "description": "",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "MAX",
+              "description": "",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "MIN",
+              "description": "",
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "possibleTypes": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "Issuer",
+          "description": "Represents an Issuer in the network.",
+          "fields": [
+            {
+              "name": "id",
+              "description": "",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "certificates",
+              "description": "Collection of Certificates associated with the Profile.",
+              "args": [
+                {
+                  "name": "filter",
+                  "description": "",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "Filter",
+                        "ofType": null
+                      }
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "aggregates",
+                  "description": "",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "Aggregate",
+                        "ofType": null
+                      }
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "Certificates",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "name",
+              "description": "",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "assets",
+              "description": "Assets issued by the Issuer.",
+              "args": [
+                {
+                  "name": "filter",
+                  "description": "",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "Filter",
+                        "ofType": null
+                      }
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "aggregates",
+                  "description": "",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "Aggregate",
+                        "ofType": null
+                      }
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "Assets",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "tokens",
+              "description": "Tokens which belongs to the Issuer.",
+              "args": [
+                {
+                  "name": "filter",
+                  "description": "",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "Filter",
+                        "ofType": null
+                      }
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "aggregates",
+                  "description": "",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "Aggregate",
+                        "ofType": null
+                      }
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "Tokens",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": [],
+          "interfaces": [
+            {
+              "kind": "INTERFACE",
+              "name": "Profile",
+              "ofType": null
+            }
+          ],
           "enumValues": [],
           "possibleTypes": []
         },
@@ -421,15 +1184,15 @@
               "deprecationReason": null
             },
             {
-              "name": "owner",
-              "description": "Association to Owner.",
+              "name": "user",
+              "description": "Association to User.",
               "args": [],
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
                 "ofType": {
                   "kind": "OBJECT",
-                  "name": "Owner",
+                  "name": "User",
                   "ofType": null
                 }
               },
@@ -492,8 +1255,59 @@
         },
         {
           "kind": "OBJECT",
+          "name": "Certificates",
+          "description": "Results for certificates query.",
+          "fields": [
+            {
+              "name": "list",
+              "description": "Collection of Certificate Objects, conforms to the Filter input if provided.",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "Certificate",
+                    "ofType": null
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "aggregate",
+              "description": "Collection of Aggregate Results, if an Aggregate input was provided.",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "AggregateResult",
+                    "ofType": null
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": [],
+          "interfaces": [],
+          "enumValues": [],
+          "possibleTypes": []
+        },
+        {
+          "kind": "OBJECT",
           "name": "Query",
-          "description": "The query root of Ownera's GraphQL interface",
+          "description": "The query root of Usera's GraphQL interface",
           "fields": [
             {
               "name": "assets",
@@ -549,8 +1363,8 @@
               "deprecationReason": null
             },
             {
-              "name": "owners",
-              "description": "Look up Owners, Optional provide Filter or Aggregate",
+              "name": "users",
+              "description": "Look up Users, Optional provide Filter or Aggregate",
               "args": [
                 {
                   "name": "filter",
@@ -594,7 +1408,7 @@
                 "name": null,
                 "ofType": {
                   "kind": "OBJECT",
-                  "name": "Owners",
+                  "name": "Users",
                   "ofType": null
                 }
               },
@@ -761,8 +1575,8 @@
               "deprecationReason": null
             },
             {
-              "name": "claims",
-              "description": "Look up Claims, Optional provide Filter or Aggregate",
+              "name": "certificates",
+              "description": "Look up Certificates, Optional provide Filter or Aggregate",
               "args": [
                 {
                   "name": "filter",
@@ -806,7 +1620,7 @@
                 "name": null,
                 "ofType": {
                   "kind": "OBJECT",
-                  "name": "Claims",
+                  "name": "Certificates",
                   "ofType": null
                 }
               },
@@ -847,372 +1661,29 @@
           "possibleTypes": []
         },
         {
-          "kind": "OBJECT",
-          "name": "Owner",
-          "description": "Represents an Owner in the network.",
-          "fields": [
-            {
-              "name": "id",
-              "description": "",
-              "args": [],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "claims",
-              "description": "Collection of Claims associated with the Profile.",
-              "args": [
-                {
-                  "name": "filter",
-                  "description": "",
-                  "type": {
-                    "kind": "LIST",
-                    "name": null,
-                    "ofType": {
-                      "kind": "NON_NULL",
-                      "name": null,
-                      "ofType": {
-                        "kind": "INPUT_OBJECT",
-                        "name": "Filter",
-                        "ofType": null
-                      }
-                    }
-                  },
-                  "defaultValue": null
-                },
-                {
-                  "name": "aggregates",
-                  "description": "",
-                  "type": {
-                    "kind": "LIST",
-                    "name": null,
-                    "ofType": {
-                      "kind": "NON_NULL",
-                      "name": null,
-                      "ofType": {
-                        "kind": "INPUT_OBJECT",
-                        "name": "Aggregate",
-                        "ofType": null
-                      }
-                    }
-                  },
-                  "defaultValue": null
-                }
-              ],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "Claims",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "name",
-              "description": "",
-              "args": [],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "tokens",
-              "description": "Tokens which belongs to the Owner.",
-              "args": [
-                {
-                  "name": "filter",
-                  "description": "",
-                  "type": {
-                    "kind": "LIST",
-                    "name": null,
-                    "ofType": {
-                      "kind": "NON_NULL",
-                      "name": null,
-                      "ofType": {
-                        "kind": "INPUT_OBJECT",
-                        "name": "Filter",
-                        "ofType": null
-                      }
-                    }
-                  },
-                  "defaultValue": null
-                },
-                {
-                  "name": "aggregates",
-                  "description": "",
-                  "type": {
-                    "kind": "LIST",
-                    "name": null,
-                    "ofType": {
-                      "kind": "NON_NULL",
-                      "name": null,
-                      "ofType": {
-                        "kind": "INPUT_OBJECT",
-                        "name": "Aggregate",
-                        "ofType": null
-                      }
-                    }
-                  },
-                  "defaultValue": null
-                }
-              ],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "Tokens",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            }
-          ],
+          "kind": "SCALAR",
+          "name": "Int",
+          "description": "The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.",
+          "fields": [],
           "inputFields": [],
-          "interfaces": [
-            {
-              "kind": "INTERFACE",
-              "name": "Profile",
-              "ofType": null
-            }
-          ],
+          "interfaces": [],
           "enumValues": [],
           "possibleTypes": []
         },
         {
-          "kind": "OBJECT",
-          "name": "Issuer",
-          "description": "Represents an Issuer in the network.",
-          "fields": [
-            {
-              "name": "id",
-              "description": "",
-              "args": [],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "claims",
-              "description": "Collection of Claims associated with the Profile.",
-              "args": [
-                {
-                  "name": "filter",
-                  "description": "",
-                  "type": {
-                    "kind": "LIST",
-                    "name": null,
-                    "ofType": {
-                      "kind": "NON_NULL",
-                      "name": null,
-                      "ofType": {
-                        "kind": "INPUT_OBJECT",
-                        "name": "Filter",
-                        "ofType": null
-                      }
-                    }
-                  },
-                  "defaultValue": null
-                },
-                {
-                  "name": "aggregates",
-                  "description": "",
-                  "type": {
-                    "kind": "LIST",
-                    "name": null,
-                    "ofType": {
-                      "kind": "NON_NULL",
-                      "name": null,
-                      "ofType": {
-                        "kind": "INPUT_OBJECT",
-                        "name": "Aggregate",
-                        "ofType": null
-                      }
-                    }
-                  },
-                  "defaultValue": null
-                }
-              ],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "Claims",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "name",
-              "description": "",
-              "args": [],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "assets",
-              "description": "Assets issued by the Issuer.",
-              "args": [
-                {
-                  "name": "filter",
-                  "description": "",
-                  "type": {
-                    "kind": "LIST",
-                    "name": null,
-                    "ofType": {
-                      "kind": "NON_NULL",
-                      "name": null,
-                      "ofType": {
-                        "kind": "INPUT_OBJECT",
-                        "name": "Filter",
-                        "ofType": null
-                      }
-                    }
-                  },
-                  "defaultValue": null
-                },
-                {
-                  "name": "aggregates",
-                  "description": "",
-                  "type": {
-                    "kind": "LIST",
-                    "name": null,
-                    "ofType": {
-                      "kind": "NON_NULL",
-                      "name": null,
-                      "ofType": {
-                        "kind": "INPUT_OBJECT",
-                        "name": "Aggregate",
-                        "ofType": null
-                      }
-                    }
-                  },
-                  "defaultValue": null
-                }
-              ],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "Assets",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "tokens",
-              "description": "Tokens which belongs to the Issuer.",
-              "args": [
-                {
-                  "name": "filter",
-                  "description": "",
-                  "type": {
-                    "kind": "LIST",
-                    "name": null,
-                    "ofType": {
-                      "kind": "NON_NULL",
-                      "name": null,
-                      "ofType": {
-                        "kind": "INPUT_OBJECT",
-                        "name": "Filter",
-                        "ofType": null
-                      }
-                    }
-                  },
-                  "defaultValue": null
-                },
-                {
-                  "name": "aggregates",
-                  "description": "",
-                  "type": {
-                    "kind": "LIST",
-                    "name": null,
-                    "ofType": {
-                      "kind": "NON_NULL",
-                      "name": null,
-                      "ofType": {
-                        "kind": "INPUT_OBJECT",
-                        "name": "Aggregate",
-                        "ofType": null
-                      }
-                    }
-                  },
-                  "defaultValue": null
-                }
-              ],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "Tokens",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            }
-          ],
+          "kind": "SCALAR",
+          "name": "Boolean",
+          "description": "The `Boolean` scalar type represents `true` or `false`.",
+          "fields": [],
           "inputFields": [],
-          "interfaces": [
-            {
-              "kind": "INTERFACE",
-              "name": "Profile",
-              "ofType": null
-            }
-          ],
+          "interfaces": [],
           "enumValues": [],
           "possibleTypes": []
         },
         {
-          "kind": "OBJECT",
-          "name": "Claim",
-          "description": "Represents a Claim in the network.",
+          "kind": "INTERFACE",
+          "name": "Profile",
+          "description": "Profile interface.",
           "fields": [
             {
               "name": "id",
@@ -1231,89 +1702,54 @@
               "deprecationReason": null
             },
             {
-              "name": "profile",
-              "description": "Profile to whom this Claim is associate with.",
-              "args": [],
+              "name": "certificates",
+              "description": "Collection of Certificates associated with the Profile.",
+              "args": [
+                {
+                  "name": "filter",
+                  "description": "",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "Filter",
+                        "ofType": null
+                      }
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "aggregates",
+                  "description": "",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "Aggregate",
+                        "ofType": null
+                      }
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
                 "ofType": {
-                  "kind": "INTERFACE",
-                  "name": "Profile",
+                  "kind": "OBJECT",
+                  "name": "Certificates",
                   "ofType": null
                 }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "type",
-              "description": "Type of Claim (KYA,KYC,AML etc.. ).",
-              "args": [],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "providerId",
-              "description": "Service Provider Id which provided the Claim.",
-              "args": [],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "issuedAt",
-              "description": "",
-              "args": [],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "Int",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "expiry",
-              "description": "",
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "data",
-              "description": "Semi-Structured Data provided as additional information for the Claim.",
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
               },
               "isDeprecated": false,
               "deprecationReason": null
@@ -1322,12 +1758,33 @@
           "inputFields": [],
           "interfaces": [],
           "enumValues": [],
-          "possibleTypes": []
+          "possibleTypes": [
+            {
+              "kind": "OBJECT",
+              "name": "Asset",
+              "ofType": null
+            },
+            {
+              "kind": "OBJECT",
+              "name": "Issuer",
+              "ofType": null
+            },
+            {
+              "kind": "OBJECT",
+              "name": "ServiceProvider",
+              "ofType": null
+            },
+            {
+              "kind": "OBJECT",
+              "name": "User",
+              "ofType": null
+            }
+          ]
         },
         {
           "kind": "OBJECT",
           "name": "Assets",
-          "description": "Results for asset query.",
+          "description": "Results for assets query.",
           "fields": [
             {
               "name": "list",
@@ -1342,6 +1799,57 @@
                   "ofType": {
                     "kind": "OBJECT",
                     "name": "Asset",
+                    "ofType": null
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "aggregate",
+              "description": "Collection of Aggregate Results, if an Aggregate input was provided.",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "AggregateResult",
+                    "ofType": null
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": [],
+          "interfaces": [],
+          "enumValues": [],
+          "possibleTypes": []
+        },
+        {
+          "kind": "OBJECT",
+          "name": "Issuers",
+          "description": "Results for issuers query.",
+          "fields": [
+            {
+              "name": "list",
+              "description": "Collection of Issuer Objects, conforms to the Filter input if provided.",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "Issuer",
                     "ofType": null
                   }
                 }
@@ -1470,9 +1978,19 @@
           "possibleTypes": []
         },
         {
+          "kind": "SCALAR",
+          "name": "ID",
+          "description": "The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as \"4\") or integer (such as 4) input value will be accepted as an ID.",
+          "fields": [],
+          "inputFields": [],
+          "interfaces": [],
+          "enumValues": [],
+          "possibleTypes": []
+        },
+        {
           "kind": "OBJECT",
-          "name": "ServiceProvider",
-          "description": "Represents a ServiceProvider in the network.",
+          "name": "Certificate",
+          "description": "Represents a Certificate in the network.",
           "fields": [
             {
               "name": "id",
@@ -1491,435 +2009,15 @@
               "deprecationReason": null
             },
             {
-              "name": "claims",
-              "description": "Collection of Claims associated with the Profile.",
-              "args": [
-                {
-                  "name": "filter",
-                  "description": "",
-                  "type": {
-                    "kind": "LIST",
-                    "name": null,
-                    "ofType": {
-                      "kind": "NON_NULL",
-                      "name": null,
-                      "ofType": {
-                        "kind": "INPUT_OBJECT",
-                        "name": "Filter",
-                        "ofType": null
-                      }
-                    }
-                  },
-                  "defaultValue": null
-                },
-                {
-                  "name": "aggregates",
-                  "description": "",
-                  "type": {
-                    "kind": "LIST",
-                    "name": null,
-                    "ofType": {
-                      "kind": "NON_NULL",
-                      "name": null,
-                      "ofType": {
-                        "kind": "INPUT_OBJECT",
-                        "name": "Aggregate",
-                        "ofType": null
-                      }
-                    }
-                  },
-                  "defaultValue": null
-                }
-              ],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "Claims",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "name",
-              "description": "",
+              "name": "profile",
+              "description": "Profile to whom this Certificate is associate with.",
               "args": [],
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
                 "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "services",
-              "description": "Services offered by the Service Provided (Claims, Regulation Apps, etc..).",
-              "args": [],
-              "type": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            }
-          ],
-          "inputFields": [],
-          "interfaces": [
-            {
-              "kind": "INTERFACE",
-              "name": "Profile",
-              "ofType": null
-            }
-          ],
-          "enumValues": [],
-          "possibleTypes": []
-        },
-        {
-          "kind": "INPUT_OBJECT",
-          "name": "Filter",
-          "description": "Filter capabilities that can be applied on queries which return multiple results of a given Entity.\nCurrently filtering is available only on the fields which belongs to the Root of the entity\nand not on nested entities' fields.",
-          "fields": [],
-          "inputFields": [
-            {
-              "name": "key",
-              "description": "The Object's key to which apply the filter rule.",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "value",
-              "description": "The Value to be used by the Filter Operator.",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "operator",
-              "description": "Operator to apply on the specified key and provided value.",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "ENUM",
-                  "name": "Operator",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            }
-          ],
-          "interfaces": [],
-          "enumValues": [],
-          "possibleTypes": []
-        },
-        {
-          "kind": "OBJECT",
-          "name": "Issuers",
-          "description": "Results for issuers query.",
-          "fields": [
-            {
-              "name": "list",
-              "description": "Collection of Issuer Objects, conforms to the Filter input if provided.",
-              "args": [],
-              "type": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "OBJECT",
-                    "name": "Issuer",
-                    "ofType": null
-                  }
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "aggregate",
-              "description": "Collection of Aggregate Results, if an Aggregate input was provided.",
-              "args": [],
-              "type": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "OBJECT",
-                    "name": "AggregateResult",
-                    "ofType": null
-                  }
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            }
-          ],
-          "inputFields": [],
-          "interfaces": [],
-          "enumValues": [],
-          "possibleTypes": []
-        },
-        {
-          "kind": "ENUM",
-          "name": "AggregateFunc",
-          "description": "Aggregation function to be applied on Object's numeric field.",
-          "fields": [],
-          "inputFields": [],
-          "interfaces": [],
-          "enumValues": [
-            {
-              "name": "SUM",
-              "description": "",
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "COUNT",
-              "description": "",
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "AVG",
-              "description": "",
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "MAX",
-              "description": "",
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "MIN",
-              "description": "",
-              "isDeprecated": false,
-              "deprecationReason": null
-            }
-          ],
-          "possibleTypes": []
-        },
-        {
-          "kind": "SCALAR",
-          "name": "Float",
-          "description": "The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](http://en.wikipedia.org/wiki/IEEE_floating_point).",
-          "fields": [],
-          "inputFields": [],
-          "interfaces": [],
-          "enumValues": [],
-          "possibleTypes": []
-        },
-        {
-          "kind": "SCALAR",
-          "name": "String",
-          "description": "The `String`scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.",
-          "fields": [],
-          "inputFields": [],
-          "interfaces": [],
-          "enumValues": [],
-          "possibleTypes": []
-        },
-        {
-          "kind": "ENUM",
-          "name": "Operator",
-          "description": "Operators available to be used ",
-          "fields": [],
-          "inputFields": [],
-          "interfaces": [],
-          "enumValues": [
-            {
-              "name": "EQ",
-              "description": "Equals",
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "NEQ",
-              "description": "Not Equals",
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "GT",
-              "description": "Greater Than",
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "GTE",
-              "description": "Greater Than or Equals",
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "LT",
-              "description": "Less Than",
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "LTE",
-              "description": "Less Than or Equals",
-              "isDeprecated": false,
-              "deprecationReason": null
-            }
-          ],
-          "possibleTypes": []
-        },
-        {
-          "kind": "OBJECT",
-          "name": "Owners",
-          "description": "Results for asset query.",
-          "fields": [
-            {
-              "name": "list",
-              "description": "Collection of Owner Objects, conforms to the Filter input if provided.",
-              "args": [],
-              "type": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "OBJECT",
-                    "name": "Owner",
-                    "ofType": null
-                  }
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "aggregate",
-              "description": "",
-              "args": [],
-              "type": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "OBJECT",
-                    "name": "AggregateResult",
-                    "ofType": null
-                  }
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            }
-          ],
-          "inputFields": [],
-          "interfaces": [],
-          "enumValues": [],
-          "possibleTypes": []
-        },
-        {
-          "kind": "OBJECT",
-          "name": "Claims",
-          "description": "Results for claims query.",
-          "fields": [
-            {
-              "name": "list",
-              "description": "Collection of Claim Objects, conforms to the Filter input if provided.",
-              "args": [],
-              "type": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "OBJECT",
-                    "name": "Claim",
-                    "ofType": null
-                  }
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "aggregate",
-              "description": "Collection of Aggregate Results, if an Aggregate input was provided.",
-              "args": [],
-              "type": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "OBJECT",
-                    "name": "AggregateResult",
-                    "ofType": null
-                  }
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            }
-          ],
-          "inputFields": [],
-          "interfaces": [],
-          "enumValues": [],
-          "possibleTypes": []
-        },
-        {
-          "kind": "OBJECT",
-          "name": "Node",
-          "description": "Node's information.",
-          "fields": [
-            {
-              "name": "id",
-              "description": "",
-              "args": [],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
+                  "kind": "INTERFACE",
+                  "name": "Profile",
                   "ofType": null
                 }
               },
@@ -1928,7 +2026,7 @@
             },
             {
               "name": "type",
-              "description": "",
+              "description": "Type of Certificate (KYA,KYC,AML etc.. ).",
               "args": [],
               "type": {
                 "kind": "NON_NULL",
@@ -1943,54 +2041,57 @@
               "deprecationReason": null
             },
             {
-              "name": "assets",
-              "description": "Assets which the Node act as the Primary Node.",
-              "args": [
-                {
-                  "name": "filter",
-                  "description": "",
-                  "type": {
-                    "kind": "LIST",
-                    "name": null,
-                    "ofType": {
-                      "kind": "NON_NULL",
-                      "name": null,
-                      "ofType": {
-                        "kind": "INPUT_OBJECT",
-                        "name": "Filter",
-                        "ofType": null
-                      }
-                    }
-                  },
-                  "defaultValue": null
-                },
-                {
-                  "name": "aggregates",
-                  "description": "",
-                  "type": {
-                    "kind": "LIST",
-                    "name": null,
-                    "ofType": {
-                      "kind": "NON_NULL",
-                      "name": null,
-                      "ofType": {
-                        "kind": "INPUT_OBJECT",
-                        "name": "Aggregate",
-                        "ofType": null
-                      }
-                    }
-                  },
-                  "defaultValue": null
-                }
-              ],
+              "name": "providerId",
+              "description": "Service Provider Id which provided the Certificate.",
+              "args": [],
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
                 "ofType": {
-                  "kind": "OBJECT",
-                  "name": "Assets",
+                  "kind": "SCALAR",
+                  "name": "String",
                   "ofType": null
                 }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "issuedAt",
+              "description": "",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "expiry",
+              "description": "",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "data",
+              "description": "Semi-Structured Data provided as additional information for the Certificate.",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
               },
               "isDeprecated": false,
               "deprecationReason": null
@@ -2000,135 +2101,9 @@
           "interfaces": [],
           "enumValues": [],
           "possibleTypes": []
-        },
-        {
-          "kind": "INTERFACE",
-          "name": "Profile",
-          "description": "",
-          "fields": [
-            {
-              "name": "id",
-              "description": "",
-              "args": [],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "claims",
-              "description": "Collection of Claims associated with the Profile.",
-              "args": [
-                {
-                  "name": "filter",
-                  "description": "",
-                  "type": {
-                    "kind": "LIST",
-                    "name": null,
-                    "ofType": {
-                      "kind": "NON_NULL",
-                      "name": null,
-                      "ofType": {
-                        "kind": "INPUT_OBJECT",
-                        "name": "Filter",
-                        "ofType": null
-                      }
-                    }
-                  },
-                  "defaultValue": null
-                },
-                {
-                  "name": "aggregates",
-                  "description": "",
-                  "type": {
-                    "kind": "LIST",
-                    "name": null,
-                    "ofType": {
-                      "kind": "NON_NULL",
-                      "name": null,
-                      "ofType": {
-                        "kind": "INPUT_OBJECT",
-                        "name": "Aggregate",
-                        "ofType": null
-                      }
-                    }
-                  },
-                  "defaultValue": null
-                }
-              ],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "Claims",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            }
-          ],
-          "inputFields": [],
-          "interfaces": [],
-          "enumValues": [],
-          "possibleTypes": [
-            {
-              "kind": "OBJECT",
-              "name": "Asset",
-              "ofType": null
-            },
-            {
-              "kind": "OBJECT",
-              "name": "Issuer",
-              "ofType": null
-            },
-            {
-              "kind": "OBJECT",
-              "name": "ServiceProvider",
-              "ofType": null
-            },
-            {
-              "kind": "OBJECT",
-              "name": "Owner",
-              "ofType": null
-            }
-          ]
         }
       ],
       "directives": [
-        {
-          "name": "include",
-          "description": "The @include directive may be provided for fields, fragment spreads, and inline fragments, and allows for conditional inclusion during execution as described by the if argument.",
-          "locations": [
-            "FIELD",
-            "FRAGMENT_SPREAD",
-            "INLINE_FRAGMENT"
-          ],
-          "args": [
-            {
-              "name": "if",
-              "description": "",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "Boolean",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            }
-          ]
-        },
         {
           "name": "skip",
           "description": "The @skip directive may be provided for fields, fragment spreads, and inline fragments, and allows for conditional exclusion during execution as described by the if argument.",
@@ -2171,6 +2146,31 @@
                 "ofType": null
               },
               "defaultValue": "\"No longer supported\""
+            }
+          ]
+        },
+        {
+          "name": "include",
+          "description": "The @include directive may be provided for fields, fragment spreads, and inline fragments, and allows for conditional inclusion during execution as described by the if argument.",
+          "locations": [
+            "FIELD",
+            "FRAGMENT_SPREAD",
+            "INLINE_FRAGMENT"
+          ],
+          "args": [
+            {
+              "name": "if",
+              "description": "",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                }
+              },
+              "defaultValue": null
             }
           ]
         }
