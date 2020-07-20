@@ -2,8 +2,13 @@
 type Node {
     id: String!
     type: String!
+    name: String!
+
     "Assets which the Node act as the Primary Node."
     assets(filter : [Filter!], aggregates: [Aggregate!]): Assets!
+
+    "Users which the Node act as the Primary Node."
+    users(filter : [Filter!], aggregates: [Aggregate!]): Users!
 }
 
 "Profile interface."
@@ -12,6 +17,12 @@ interface Profile {
 
     "Collection of Certificates associated with the Profile."
     certificates(filter : [Filter!], aggregates: [Aggregate!]): Certificates!
+
+    "Node id to which this profile is associated with."
+    nodeId: String!
+
+    "Profile metadata, contains ACL information of the profile."
+    metadata: ProfileMetadata!
 }
 
 "Represents an Asset in the network."
@@ -20,6 +31,9 @@ type Asset implements Profile  {
 
     "Collection of Certificates associated with the Profile."
     certificates(filter : [Filter!], aggregates: [Aggregate!]): Certificates!
+
+    "Collection of Sales associated with the Asset."
+    sales(filter : [Filter!], aggregates: [Aggregate!]): Sales!
 
     name: String!
 
@@ -37,6 +51,12 @@ type Asset implements Profile  {
 
     "Regulation Verifiers associated with the Asset."
     regulationVerifiersIds: [String!]
+
+    "Node id to whom this profile is associated with."
+    nodeId: String!
+
+    "Profile metadata, contains ACL information of the profile."
+    metadata: ProfileMetadata!
 }
 
 "Represents an Issuer in the network."
@@ -53,6 +73,15 @@ type Issuer implements Profile  {
 
     "Tokens which belongs to the Issuer."
     tokens(filter : [Filter!], aggregates: [Aggregate!]): Tokens!
+
+    "Node id to whom this profile is associated with."
+    nodeId: String!
+
+    "Profile metadata, contains ACL information of the profile."
+    metadata: ProfileMetadata!
+
+    "Issuer's public key."
+    publicKey: String!
 }
 
 "Represents a ServiceProvider in the network."
@@ -66,6 +95,12 @@ type ServiceProvider implements Profile {
 
     "Services offered by the Service Provided (Certificates, Regulation Verifiers, etc..)."
     services: [String!]
+
+    "Node id to whom this profile is associated with."
+    nodeId: String!
+
+    "Profile metadata, contains ACL information of the profile."
+    metadata: ProfileMetadata!
 }
 
 "Represents an User in the network."
@@ -79,6 +114,15 @@ type User implements Profile  {
 
     "Tokens which belongs to the User."
     tokens(filter : [Filter!], aggregates: [Aggregate!]):Tokens!
+
+    "Node id to whom this profile is associated with."
+    nodeId: String!
+
+    "Profile metadata, contains ACL information of the profile."
+    metadata: ProfileMetadata!
+
+    "User's public key."
+    publicKey: String!
 }
 
 "Represents a Token in the network."
@@ -115,6 +159,32 @@ type Certificate {
     "Semi-Structured Data provided as additional information for the Certificate."
     data: String
 }
+
+"Represent an Asset's Sale occasion in which the Asset's tokens are issued."
+type Sale {
+    id: String!
+
+    "Start time of the sale."
+    start: Int!
+
+    "End time of the sale."
+    end: Int!
+
+    "Quantity limit of the sale."
+    quantity: Int!
+
+    "Requested price of tokens issued in the sale."
+    price: Int!
+
+    "Total issued token in the sale."
+    totalIssued: Int!
+}
+
+"Profile Metadata (ACL)."
+type ProfileMetadata {
+    acl: [String!]
+}
+
 
 """
 Filter capabilities that can be applied on queries which return multiple results of a given Entity.
@@ -201,6 +271,25 @@ type Certificates {
     aggregate: [AggregateResult!]
 }
 
+"Results for nodes query."
+type Nodes {
+    "Collection of Node Objects, conforms to the Filter input if provided."
+    list: [Node!]
+
+    "Collection of Aggregate Results, if an Aggregate input was provided."
+    aggregate: [AggregateResult!]
+}
+
+"Results for sales query."
+type Sales {
+    "Collection of Sale Objects, conforms to the Filter input if provided."
+    list: [Sale!]
+
+    "Collection of Aggregate Results, if an Aggregate input was provided."
+    aggregate: [AggregateResult!]
+}
+
+
 "Result of Aggregation function applied on an Object numeric field."
 type AggregateResult {
     "The Object's field which this results refer to."
@@ -250,7 +339,7 @@ type Query {
     "Look up Certificates, Optional provide Filter or Aggregate"
     certificates(filter: [Filter!], aggregate: [Aggregate!]): Certificates!
 
-    "Look up a Node"
-    node(id: String!): Node
+    "Look up Nodes, Optional provide Filter or Aggregate."
+    nodes(filter: [Filter!], aggregate: [Aggregate!]): Nodes!
 }
 
