@@ -27,8 +27,7 @@ This index contains links to all the spec documents that are currently merged.
 These specs define processes for the specification framework itself, such as the
 expected lifecycle and document formatting.
 
-- [Spec Lifecycle][spec_lifecycle] - The process for introducing, revising and
-  adopting specs.
+- [Spec Lifecycle][spec_lifecycle] - TBD
 
 ### Apps API
 
