@@ -6,13 +6,13 @@ on:
     branches:
       - "**"
     paths:
-      - "application_api/**"
+      - "application-api/**"
       - ".github/workflows/application_api.yml"
   push:
     branches:
       - "master"
     paths:
-      - "application_api/**"
+      - "application-api/**"
       - ".github/workflows/application_api.yml"
 
 jobs:
