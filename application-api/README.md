@@ -11,7 +11,7 @@ Requests and responses can be crafted with auto-generated code using
 
 [*The transactional API*][application_openapi_spec] conforms to REST. It has predictable, resource-oriented URLs, and it uses HTTP response codes to indicate API errors. JSON is returned by all API responses, including errors.
 
-Use the [*Documentation style visualization*][application_openapi_spec_viewer] for a human readable version.
+Use the [*OpenAPI editor*][application_openapi_spec_viewer] to explore the transactional API schema.
 
 [*The query API*][application_graphql_schema] conform to GraphQL, as such it offers significantly more flexibility for the application development. The ability to define precisely the data you want—and only the data you want—is a powerful advantage over the REST. GraphQL lets you replace multiple REST requests with a single call to fetch the data you specify.
 
