@@ -12,8 +12,8 @@ info:
 tags:
   - name: profiles
     description: Access to Profiles
-  - name: claims
-    description: Access to Claims
+  - name: certificates
+    description: Access to Certificates
   - name: docs
     description: Documents storage
   - name: tokens
@@ -392,17 +392,17 @@ paths:
           description: Invalid Input
         '500':
           description: System error
-  '/claims/{id}':
+  '/certificates/{id}':
     put:
       tags:
-        - claims
-      summary: Update claim
-      description: Updates a new Claim for a specific profile identity
-      operationId: updateClaim
+        - certificates
+      summary: Update Certificate
+      description: Updates a new Certificate for a specific profile identity
+      operationId: updateCertificate
       parameters:
         - name: id
           in: path
-          description: ID of a claim to update
+          description: ID of a Certificate to update
           required: true
           schema:
             type: string
@@ -420,14 +420,14 @@ paths:
                 issuanceDate:
                   type: number
                   format: utc
-                  description: The issuance date of the claim
+                  description: The issuance date of the Certificate
                 expirationDate:
                   type: number
                   format: utc
-                  description: The expiration date of the claim
+                  description: The expiration date of the Certificate
                 data:
                   type: string
-                  description: Serilized data objects that contain one or more properties that are each related to the subject of the claim
+                  description: Serilized data objects that contain one or more properties that are each related to the subject of the Certificate
                 signature:
                   type: string
                   description: |
@@ -437,7 +437,7 @@ paths:
 
                     | order | value | type | comment |
                     |--|--|--|--|
-                    | 1 | "UpdateClaim" | string | name of the method |
+                    | 1 | "UpdateCertificate" | string | name of the method |
                     | 2 | data | object | serilized json |
                     | 3 | expirationDate | string | utc |
                     | 4 | id | string | |
@@ -452,13 +452,13 @@ paths:
         '500':
           description: System error
           content: {}
-  /claims:
+  /certificates:
     post:
       tags:
-        - claims
-      summary: Create claim
-      description: Creates a new Claim for a specific profile identity
-      operationId: createClaim
+        - certificates
+      summary: Create Certificate
+      description: Creates a new Certificate for a specific profile identity
+      operationId: createCertificate
       requestBody:
         content:
           application/json:
@@ -475,21 +475,21 @@ paths:
               properties:
                 type:
                   type: string
-                  description: The type of the claim
+                  description: The type of the Certificate
                 issuerId:
                   type: string
-                  description: The ID of the provider that created the claim
+                  description: The ID of the provider that created the Certificate
                 issuanceDate:
                   type: number
                   format: utc
-                  description: The issuance date of the claim
+                  description: The issuance date of the Certificate
                 expirationDate:
                   type: number
                   format: utc
-                  description: The expiration date of the claim
+                  description: The expiration date of the Certificate
                 data:
                   type: string
-                  description: Serilized data objects that contain one or more properties that are each related to the subject of the claim
+                  description: Serilized data objects that contain one or more properties that are each related to the subject of the Certificate
                 signature:
                   type: string
                   description: |
@@ -499,7 +499,7 @@ paths:
 
                     | order | value | type | comment |
                     |--|--|--|--|
-                    | 1 | "CreateClaim" | string | name of the method |
+                    | 1 | "CreateCertificate" | string | name of the method |
                     | 2 | data | object | serilized json |
                     | 3 | expirationDate | string | utc |
                     | 4 | issuanceDate | string | utc |
@@ -515,13 +515,13 @@ paths:
         '500':
           description: System error
           content: {}
-  '/docs/{claimnId}/{id}':
+  '/docs/{certificateId}/{id}':
     get:
       tags:
         - docs
       summary: Get document
-      description: 'Get document content, associated with a claim ID'
-      operationId: getClaimDoc
+      description: 'Get document content, associated with a Certificate ID'
+      operationId: getCertificateDoc
       parameters:
         - name: id
           in: path
@@ -529,9 +529,9 @@ paths:
           required: true
           schema:
             type: string
-        - name: claimnId
+        - name: certificateId
           in: path
-          description: ID of a claim to return
+          description: ID of a Certificate to return
           required: true
           schema:
             type: string
@@ -554,8 +554,8 @@ paths:
       tags:
         - docs
       summary: Update document
-      description: Update an existing document on a Claim
-      operationId: updateClaimDoc
+      description: Update an existing document on a Certificate
+      operationId: updateCertificateDoc
       parameters:
         - name: id
           in: path
@@ -563,9 +563,9 @@ paths:
           required: true
           schema:
             type: string
-        - name: claimnId
+        - name: certificateId
           in: path
-          description: ID of a claim
+          description: ID of a Certificate
           required: true
           schema:
             type: string
@@ -587,7 +587,7 @@ paths:
                     | order | value | type | comment |
                     |--|--|--|--|
                     | 1 | "UpdateDocument" | string | name of the method |
-                    | 2 | claimId | string | |
+                    | 2 | certificateId | string | |
                     | 3 | file | []byte | |
                     | 4 | id | string | |
           multipart/form-data:
@@ -615,17 +615,17 @@ paths:
         '500':
           description: System error
           content: {}
-  '/docs/{claimnId}':
+  '/docs/{certificateId}':
     get:
       tags:
         - docs
-      summary: Get claim documents
-      description: Get all documents associated with a claim ID
-      operationId: getClaimDocs
+      summary: Get Certificate documents
+      description: Get all documents associated with a Certificate ID
+      operationId: getCertificateDocs
       parameters:
-        - name: claimnId
+        - name: certificateId
           in: path
-          description: ID of a claim to return
+          description: ID of a Certificate to return
           required: true
           schema:
             type: string
@@ -658,13 +658,13 @@ paths:
     post:
       tags:
         - docs
-      summary: Put a new document on a claim
-      description: Put a new document associated with a claim ID
-      operationId: putClaimDoc
+      summary: Put a new document on a Certificate
+      description: Put a new document associated with a Certificate ID
+      operationId: putCertificateDoc
       parameters:
-        - name: claimnId
+        - name: certificateId
           in: path
-          description: ID of a claim to return
+          description: ID of a Certificate to return
           required: true
           schema:
             type: string
@@ -686,7 +686,7 @@ paths:
                     | order | value | type | comment |
                     |--|--|--|--|
                     | 1 | "CreateDocument" | string | name of the method |
-                    | 2 | claimId | string | |
+                    | 2 | certificateId | string | |
                     | 3 | file | []byte | |
           multipart/form-data:
             schema:
